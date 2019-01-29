@@ -1,0 +1,1 @@
+This project is part of the odin project and we will create a rock, papers, scissors game in the console of the browser
