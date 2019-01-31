@@ -1,65 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        function computerPlay() {
-            let choice = Math.floor((Math.random() * 3) + 1);
-            if (choice == 1){
-                return "Rock";
-            }
-            else if (choice == 2){
-                return "Paper";
-            }
-            else {
-                return "Scissors";
-            }
-        }  
-        function playRound(playerSelection, computerSelection){
-            playerSelection = playerSelection.toLowerCase();
-            computerSelection = computerSelection.toLowerCase();
-            if (playerSelection == computerSelection){
-                return 0;
-            }
-            else if (playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "paper" || playerSelection == "paper" && computerSelection == "rock"){
-                return 1;
-            }
-            else {
-                return -1;
-            }
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        body {
+            text-align: center;
         }
-        function game(){
-            let playerScore = 0;
-            let computerScore = 0;
-            for (let i = 0; i < 5; i ++){
-                let playerSelection = prompt("Choose between 'Rock', 'Paper' or 'Scissors'.").toLowerCase();
-                let computerSelection = computerPlay();
-                let roundResult = playRound(playerSelection, computerSelection);
-                if (roundResult == 0){
-                    console.log("Draw! You both got " + playerSelection);
-                }
-                else if (roundResult == 1){
-                    console.log("You win! " + playerSelection + " beats " + computerSelection + ".");
-                    playerScore ++;
-                }
-                else {
-                    console.log("You lose! " + computerSelection + " beats " + playerSelection + ".");
-                    computerScore ++;
-                }
-            }
-            if (playerScore == computerScore){
-                console.log("No one wins!");
-            }
-            else if (playerScore > computerScore){
-                console.log("You win!");
-            }
-            else {
-                console.log("You lose!");
-            }
-        }
-        game();
-    </script>
+    </style>
 </head>
 <body>
-    
+    <h1>Rock, Paper, Scissors</h1>
+    <div id="container">
+        <img onclick="game('Rock')" src="https://static.thenounproject.com/png/88661-200.png">
+        <img onclick="game('Paper')" src="https://static.thenounproject.com/png/477922-200.png">
+        <img onclick="game('Scissors')" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd98LEAPVyUJ9FviL1yMPC5U9_qr0fNKUtvvvRTO1Nkmrxs4_7">
+    </div>
+    <h2 id="text">Click on your choice!</h2>
+    <h2 id="score">Player: 0 | Computer: 0</h2>
 </body>
+<script>
+    let playerScore = 0;
+    let computerScore = 0;
+    function computerPlay() {
+        let choice = Math.floor((Math.random() * 3) + 1);
+        if (choice == 1){
+            return "Rock";
+        }
+        else if (choice == 2){
+            return "Paper";
+        }
+        else {
+            return "Scissors";
+        }
+    }  
+    function playRound(playerSelection, computerSelection){
+        playerSelection = playerSelection.toLowerCase();
+        computerSelection = computerSelection.toLowerCase();
+        if (playerSelection == computerSelection){
+            return 0;
+        }
+        else if (playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "paper" || playerSelection == "paper" && computerSelection == "rock"){
+            return 1;
+        }
+        else {
+            return -1;
+        }
+    }
+    function game(playerSelection){
+        let text = document.getElementById("text");
+        let score = document.getElementById("score");
+        let computerSelection = computerPlay();
+        let roundResult = playRound(playerSelection, computerSelection);
+        if (roundResult == 0){
+            text.innerText = ("Draw! You both got " + playerSelection);
+        }
+        else if (roundResult == 1){
+            text.innerText = ("You win! " + playerSelection + " beats " + computerSelection + ".");
+            playerScore ++;
+            score.innerText = "Player: " + playerScore + " | Computer: " + computerScore;
+        }
+        else {
+            text.innerText = ("You lose! " + computerSelection + " beats " + playerSelection + ".");
+            computerScore ++;
+            score.innerText = "Player: " + playerScore + " | Computer: " + computerScore;
+        }
+        
+        if (playerScore == 5){
+            text.innerHTML = ("You win the game with " + playerScore + " points against " + computerScore + "points!");
+            playerScore = 0;
+            computerScore = 0;
+            score.innerText = "Player: " + playerScore + " | Computer: " + computerScore;
+        }
+        else if (computerScore == 5) {
+            text.innerHTML = ("You lose the game with " + computerScore + " points against " + playerScore + "points!");
+            playerScore = 0;
+            computerScore = 0;
+            score.innerText = "Player: " + playerScore + " | Computer: " + computerScore;
+        }
+    }
+
+</script>
 </html>
